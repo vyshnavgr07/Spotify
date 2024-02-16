@@ -3,7 +3,7 @@ import { Home,Search,Plus,Library  } from 'lucide-react';
 
 const Sidebar = () => {
   return (
-    <div className='w-[23rem] h-full gap-2 flex flex-col p-3 text-white'>
+    <div className='w-[23rem] h-full gap-2 flex flex-col p-3 text-white '>
 <UpperSidebar/>
 <LowerSidebar/>
 </div>
