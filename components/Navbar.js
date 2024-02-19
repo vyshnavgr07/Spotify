@@ -1,4 +1,5 @@
 import React from 'react'
+import Link from 'next/link';
 import {
     ChevronLeft,
     ChevronRight,
@@ -26,11 +27,12 @@ const Navbar = () => {
 
 
 <div  className="flex gap-2 items-center mb-7 ">
-
-<button className=" rounded-full  bg-white text-black  p-2 hover:scale-105 transition-transform h-8 text-sm  font-weight: 900  ">
+<a href='/auth/login'> 
+ <button className=" rounded-full  bg-white text-black  p-2 hover:scale-105 transition-transform h-8 text-sm  font-weight: 900  ">
 Expolore premium
 </button>
-    
+</a> 
+
 <button className=" rounded-full bg-black flex p-2 items-center hover:scale-105 transition-transform   h-8 text-sm  ">
 <ArrowDownToLine/>
 install App
