@@ -1,4 +1,10 @@
-import React, { useState } from 'react';
+'use client';
+import React, { useEffect, useState} from 'react'
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import {app} from "../app/config"
+import { useRouter } from 'next/navigation';
+
+
 import {
   ChevronLeft,
   ChevronRight,
@@ -8,11 +14,33 @@ import {
 } from "lucide-react";
 
 const Navbar = () => {
+
+  const router=useRouter()
   const [dropdownVisible, setDropdownVisible] = useState(false);
 
   const toggleDropdown = () => {
     setDropdownVisible(!dropdownVisible);
   };
+
+
+
+
+  const auth=getAuth(app)
+
+  useEffect(()=>{
+    onAuthStateChanged(auth,(user)=>{
+      if (user){
+        console.log("give dashbord route");
+
+}    })
+  },[auth])
+
+
+
+
+
+
+
 
   return (
     <div className='flex flex-col md:flex-row justify-between p-5 bg-[#121212] h-28 w-full mt-3'>
@@ -39,7 +67,7 @@ const Navbar = () => {
 
         <div className='p-3 relative flex items-center'>
           <div className='mr-2'>
-            <Bell />
+            <Bell    />
           </div>
           <button
             id="dropdownInformationButton"
@@ -85,7 +113,7 @@ const Navbar = () => {
               </li>
             </ul>
             <div className="py-2">
-              <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign out</a>
+              <a href="/logall" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign In</a>
             </div>
           </div>
         </div>
