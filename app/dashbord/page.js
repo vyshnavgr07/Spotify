@@ -1,9 +1,6 @@
-import React from 'react'
+"use client"
 
-const page = () => {
-  return (
-    <div>dashboardddd</div>
-  )
-}
 
-export default page
+import { signOut } from "next-auth/react"
+
+export default () => <button onClick={() => signOut({ callbackUrl: 'http://localhost:3000'})}>Sign out</button>

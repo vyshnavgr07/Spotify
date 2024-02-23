@@ -63,7 +63,7 @@ const page = () => {
   <div className="bg-gradient-to-r from-gray-500 via-gray-700 to-gray-900 text-white p-6 rounded-md shadow-md">
     {!otpSent ? (
       <div id="recaptcha-container" className="mb-4">
-        {/* Add your reCAPTCHA component or styling here */}
+        
       </div>
     ) : null}
   
