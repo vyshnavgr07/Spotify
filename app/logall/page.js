@@ -2,23 +2,20 @@
 import { useRouter } from 'next/navigation';
 import Navbar2 from '@/components/Navbar2'
 import Sidebarr from '@/components/Sidebarr'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import {signIn, useSession} from "next-auth/react"
 import { data } from 'autoprefixer';
 
 
 const page = () => {
   const router = useRouter();
-//   const { data: session, status } = useSession()
-// console.log(session,"session");
-// console.log(data,"data");
-// console.log(status,"status");
-//   if (status === "authenticated") {
-//     return <p>Signed in as {session.user.email}</p>
-//   }
+  const {token}=useSession()
+  console.log(token,"respooonddd");
+  const[x,setX]=useState('')
 
-//   return <a href="/dashbord">Sign in</a>
 
+
+ 
   const otpval=()=>{
     router.push('/log')
   }
@@ -41,7 +38,7 @@ return (
 
   <button className='w-full py-3 bg-black text-white rounded-full border border-gray-500 hover:border-gray-300 flex items-center justify-center mb-2'
   onClick={()=>signIn('spotify',{callbackUrl:'/'})}>
-   
+   <img src='https://images.squarespace-cdn.com/content/v1/6042529f1fe38f0b0503be5c/1616072527567-YHOUT1L2JW6ROBTME3SQ/spotify-playlist.jpeg' className='w-8 h-8 mr-2'/>
     Continue with Spotify
   </button>
 

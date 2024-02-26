@@ -50,11 +50,11 @@ signIn:'/'
     secret:process.env.SECRET,
     callbacks:{
       async jwt({ token, user }) {
-          console.log("token from next auth:",token)
+          // console.log("token from next auth:",token)
           return { ...token, ...user };
         },
         async session({ session, token, user }) {
-          console.log(session,"next auth session");
+          // console.log(session,"next auth session");
           session.user = token;
           return session;
         },
