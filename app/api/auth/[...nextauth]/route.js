@@ -1,6 +1,7 @@
 import NextAuth from "next-auth/next";
 import GoogleProvider from "next-auth/providers/google";
 import SpotifyProvider from "next-auth/providers/spotify";
+import { headers } from "next/headers";
 
 //spoty
 const scopes = [
@@ -19,6 +20,7 @@ const LOGIN_URL='https://accounts.spotify.com/authorize?'+ new URLSearchParams(p
 
 
 
+
 //spoty
 export const authOptions={
     providers:[
@@ -26,13 +28,7 @@ export const authOptions={
         GoogleProvider({
             clientId:process.env.GOOGLE_CLIENT_ID,
             clientSecret:process.env.GOOGLE_CLIENT_SECRET,
-            authorization: {
-                params: {
-                  prompt: "consent",
-                  access_type: "offline",
-                  response_type: "code"
-                }
-              }
+            authorization: LOGIN_URL
             }),
 
 
@@ -41,27 +37,36 @@ export const authOptions={
           clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
           authorization:LOGIN_URL
         }),
-
-
-    ],
+],
+    secret:process.env.SECRET,
     pages:{
 signIn:'/'
     },
-    secret:process.env.SECRET,
     callbacks:{
-      async jwt({ token, user }) {
-          // console.log("token from next auth:",token)
-          return { ...token, ...user };
+      async jwt({ token, account}) {
+        if(account){
+          token.accessToken=account.access_Token
+        }
+          console.log("token from next auth:",token)
+          return { ...token, ...account };
         },
-        async session({ session, token, user }) {
-          // console.log(session,"next auth session");
-          session.user = token;
+
+
+
+        async session({ session, token, user}) {
+          console.log(session,"next auth session");
+          session.token = token;
+          // session.accessToken=token.accessToken
           return session;
         },
+
+
+
+
+        
   },
 }
 
 const handler=NextAuth(authOptions);
 
 export {handler as GET,handler as POST}
-

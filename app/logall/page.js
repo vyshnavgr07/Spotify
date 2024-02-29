@@ -30,11 +30,11 @@ return (
       </div>
 
       <div className='mb-6'>
-  <button className='w-full py-3 bg-black text-white rounded-full border border-gray-500 hover:border-gray-300 flex items-center justify-center mb-2'
+  {/* <button className='w-full py-3 bg-black text-white rounded-full border border-gray-500 hover:border-gray-300 flex items-center justify-center mb-2'
   onClick={()=>signIn('google',{callbackUrl:'/'})}>
     <img src='https://wallpapercave.com/wp/wp2860517.jpg' className='w-5 h-5 mr-2'/>
     Continue with Google
-  </button>
+  </button> */}
 
   <button className='w-full py-3 bg-black text-white rounded-full border border-gray-500 hover:border-gray-300 flex items-center justify-center mb-2'
   onClick={()=>signIn('spotify',{callbackUrl:'/'})}>
@@ -42,12 +42,12 @@ return (
     Continue with Spotify
   </button>
 
-
+{/* 
   <button className='w-full py-3 bg-black text-white rounded-full border border-gray-500 hover:border-gray-300 flex items-center justify-center' onClick={otpval}>
 
     <img src='https://w7.pngwing.com/pngs/563/359/png-transparent-mobile-phones-computer-icons-telephone-phone-icon-text-phone-icon-logo-thumbnail.png' className='w-5 h-5 mr-2'/>
     Continue with Phone number
-  </button>
+  </button> */}
 
 
   
