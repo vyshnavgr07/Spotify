@@ -1,5 +1,5 @@
 "use client"
-import { Sidebar } from "lucide-react";
+import Sidebarr from "@/components/Sidebarr";
 import { useSession } from "next-auth/react";
 import React, { useEffect, useState } from 'react';
 
@@ -31,7 +31,10 @@ const Page = () => {
 
   return (
     <div>
-      <div><Sidebar/></div>
+      <div>
+        
+   
+      </div>
     </div>
   );
 };

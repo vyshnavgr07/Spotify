@@ -3,6 +3,7 @@ import { ChevronDownCircle } from 'lucide-react'
 import { useSession } from 'next-auth/react'
 import { off } from 'process'
 import React, { useEffect, useState } from 'react'
+import Song from './Song'
 
 const colors=[
   'from-indigo-500',
@@ -91,9 +92,12 @@ useEffect(() => {
       </div>    
 </section>
 <div className='text-white px-8 flex flex-col space-y-1 pb-28'>
- {playlistData?.tracks.items.map((track,index)=>{
+ {playlistData?.tracks.items.map((track,i)=>{
  //song component
- return <div key={track.track.id}>{track.track.name}</div>
+ return <Song
+ key={track.track.id}
+ sno={i}
+ track={track.track}/>
  })}
  </div>
 
