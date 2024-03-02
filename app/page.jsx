@@ -18,8 +18,10 @@ export default function Home() {
   const [globalArtistId,setGlobalArtistId]=useState(null);
 
   return (
-    <div>  
-    <div  className="flex m-"> 
+    <> 
+
+
+  <div  className="flex m-"> 
 
   <div  className='mt-3' >
   <Sidebarr
@@ -28,10 +30,10 @@ export default function Home() {
   setGlobalPlaylistId={setGlobalPlaylistId}/>
    </div>
 
-;
+
 
    <div className=' ml-2 w-full'>
-    <Navbar/>
+    {/* <Navbar/> */}
     {view === 'playlist'  && <Playlist globalPlaylistId={globalPlaylistId} />}
     {view === 'Search'  && <Search/>}
    </div>
@@ -41,7 +43,7 @@ export default function Home() {
 <Footer/>
 </div>
 
-</div>
+</> 
 
   );
 }
