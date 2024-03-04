@@ -9,6 +9,7 @@ import { data } from 'autoprefixer';
 import Main from '@/components/Main';
 import Playlist from '@/components/Playlist';
 import Search from '@/components/Search';
+import Player from '@/components/Player';
 
 
 
@@ -16,7 +17,9 @@ export default function Home() {
   const [view,setView]=useState('search');
   const [globalPlaylistId,setGlobalPlaylistId]=useState(null);
   const [globalArtistId,setGlobalArtistId]=useState(null);
-
+  const[globalCurrentSongId,setGlobalCurrentSongId]=useState(null)
+  const[globalIsTrackPlaying,setGlobalIsTrackPlaying]=useState(false)  
+console.log(globalIsTrackPlaying,"vandii");
   return (
     <> 
 
@@ -30,19 +33,20 @@ export default function Home() {
   setGlobalPlaylistId={setGlobalPlaylistId}/>
    </div>
 
-
-
-   <div className=' ml-2 w-full'>
+  <div className=' ml-2 w-full'>
     {/* <Navbar/> */}
-    {view === 'playlist'  && <Playlist globalPlaylistId={globalPlaylistId} />}
+    {view === 'playlist'  && <Playlist globalPlaylistId={globalPlaylistId }  setGlobalCurrentSongId={setGlobalCurrentSongId} />}
     {view === 'Search'  && <Search/>}
-   </div>
-
-</div >
-<div className='mt-10'>
-<Footer/>
+    <div  className='sticky z-20 bottom-0 h-24 w-full'>
+<Player globalCurrentSongId={globalCurrentSongId} setGlobalCurrentSongId={setGlobalCurrentSongId} setGlobalIsTrackPlaying={setGlobalIsTrackPlaying}/>
 </div>
-
+   </div>
+ 
+</div >
+{/* <div className='mt-10'>
+<Footer/>
+</div> */}
+  
 </> 
 
   );

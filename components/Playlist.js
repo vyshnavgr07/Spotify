@@ -17,13 +17,12 @@ const colors=[
 
 
 
- const Playlist = ({globalPlaylistId}) => {
+ const Playlist = ({globalPlaylistId,setGlobalCurrentSongId,setGlobalIsTrackPlaying}) => {
   const {data:session}=useSession()
   const[playlistData,setPlaylistData]=useState(null)
   const[color,setColor]=useState(colors[0])
   const[opacity,setOpacity]=useState(1)
   const [textOpacity,setTextOpacity]=useState(1)
-
 function changOpacity(scrollPos){
 
   const offset=300;
@@ -67,14 +66,14 @@ useEffect(() => {
 }, [globalPlaylistId]);
 
   return (
-
-
-
-
 <div className='flex-grow h-screen'>
 
 <header style={{opacity:opacity}} className='text-white sticky top-0 h-20 z-10 text-4xl bg-neutral-800 p-8 flex items-center font-bold '>
-  <div  style={{opacity:textOpacity}}>{playlistData?.name}</div>
+
+  <div  style={{opacity:textOpacity}}  className='p-2 flex items-center'>
+  {playlistData && <img className='h-8 w-8 ' src={playlistData.images[0].url} />}
+   <p className='pl-1'>{playlistData?.name}</p>
+  </div>
 </header>
 
 <div className='absolute z-20 top-5 right-8 flex items-center bg-black bg-opacity-70 text-white space-x-3 opacity-90 hover:opacity-80 cursor-pointer rounded-l-full  rounded-r-full   p-1 pr-2'>
@@ -95,6 +94,8 @@ useEffect(() => {
  {playlistData?.tracks.items.map((track,i)=>{
  //song component
  return <Song
+ setGlobalIsTrackPlaying={setGlobalIsTrackPlaying}
+ setGlobalCurrentSongId={setGlobalCurrentSongId}
  key={track.track.id}
  sno={i}
  track={track.track}/>
