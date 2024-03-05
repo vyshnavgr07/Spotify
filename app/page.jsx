@@ -34,11 +34,11 @@ console.log(globalIsTrackPlaying,"vandii");
    </div>
 
   <div className=' ml-2 w-full'>
-    {/* <Navbar/> */}
+    <Navbar/>
     {view === 'playlist'  && <Playlist globalPlaylistId={globalPlaylistId }  setGlobalCurrentSongId={setGlobalCurrentSongId} />}
     {view === 'Search'  && <Search/>}
     <div  className='sticky z-20 bottom-0 h-24 w-full'>
-<Player globalCurrentSongId={globalCurrentSongId} setGlobalCurrentSongId={setGlobalCurrentSongId} setGlobalIsTrackPlaying={setGlobalIsTrackPlaying}/>
+<Player globalCurrentSongId={globalCurrentSongId} setGlobalCurrentSongId={setGlobalCurrentSongId} globalIsTrackPlaying={globalIsTrackPlaying} setGlobalIsTrackPlaying={setGlobalIsTrackPlaying}/>
 </div>
    </div>
  

@@ -1,24 +1,32 @@
-import { Play, PlayCircle } from 'lucide-react';
+import { Key, Play, PlayCircle } from 'lucide-react';
 import { useSession } from 'next-auth/react';
 import React, { useState } from 'react'
 
 
-const Song = ({sno,track, setGlobalCurrentSongId,setGlobalIsTrackPlaying}) => {
+const Song = ({sno,track, setGlobalCurrentSongId,globalIsTrackPlaying}) => {
 const[hover,setHover]=useState(false)
 const{data:session}=useSession()
-
 async function playSong(trackId){
-setGlobalCurrentSongId(trackId);
-setGlobalIsTrackPlaying(true);
+setGlobalCurrentSongId(track.id);
+console.log(globalIsTrackPlaying,"jasir");
+// setGlobalIsTrackPlaying(true)
+if(session && session.token.access_token){
+
+
 const response=await fetch('https://api.spotify.com/v1/me/player/play',{
   method:'PUT',
   headers:{
     Authorization: `Bearer ${session.token.access_token}`
 },
-body:json.strigify({
-  uri:[track.uri]
+
+body: JSON.stringify({
+  uris: [track.uri]
 })
-})
+
+});
+
+console.log(response.status,"plandii");
+}
 }
 
 
@@ -45,7 +53,7 @@ body:json.strigify({
             <p className='w-36 truncate'>  {
                     track.artists.map((artist,i)=>{
                         return(
-                            <> 
+                            < > 
                             <span className='hover:underline'>{artist.name}</span>
                             <span>{i !=track.artists.length -1 ? ", ":null}</span>
                             </>

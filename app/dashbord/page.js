@@ -11,19 +11,7 @@ const Page = () => {
   
   useEffect(() => {
     async function fetchData() {
-      if (session && session.token.access_token) {
-        setAccessToken(session.token.access_token);
-
-        const response = await fetch("https://api.spotify.com/v1/albums/4aawyAB9vmqN3uQ7FjRGTy/tracks", {
-          headers: {
-            Authorization: `Bearer ${session.token.access_token}`
-          }
-        });
-
-        const data = await response.json()
-        console.log(data,"sambaar");
-        setPlaylist(data.items);
-      }
+     
     }
 
     fetchData();

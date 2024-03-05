@@ -1,11 +1,18 @@
-import { PlayCircle, PlayCircleIcon, PlaySquare } from 'lucide-react'
+import { PauseCircleIcon, PlayCircle, PlayCircleIcon, PlaySquare } from 'lucide-react'
 import { useSession } from 'next-auth/react'
 import React, { useEffect, useState } from 'react'
 
-const Player = ({globalCurrentSongId,setGlobalCurrentSongId,setGlobalIsTrackPlaying}) => {
+const Player = ({ globalCurrentSongId, setGlobalCurrentSongId, globalIsTrackPlaying,setGlobalIsTrackPlaying }) => {
   const {data:session}=useSession();
   const [songInfo,setSongInfo]=useState(null)
-  
+  console.log(globalIsTrackPlaying,"player li8");
+
+
+
+
+
+
+
 
   async function fetchSonginfo(trackId){
     if(trackId){
@@ -31,6 +38,25 @@ const Player = ({globalCurrentSongId,setGlobalCurrentSongId,setGlobalIsTrackPlay
     const data=await response.json();
     return data;
   }
+
+
+
+  async function handlePlayPause(){
+    if(session && session.token.access_token){
+      const data=await getCurrentlyPlaying()
+      if(data.is_playing){
+        const response=await fetch("https://api.spotify.com/v1/me/player/pause",{
+          headers:{
+            Authorization: `Bearer ${session.token.access_token}`
+        }
+        })
+      }
+      
+    }
+ 
+  }
+
+
 
 
   useEffect(()=>{
@@ -63,7 +89,7 @@ f()
 </div>
         </div>
         <div className='flex items-center justify-center'>
-        <PlayCircleIcon className='w-5 h-5'/>
+     {globalIsTrackPlaying?<PauseCircleIcon onClick={handlePlayPause} className='w-5 h-5'/> :<PlayCircleIcon   onClick={handlePlayPause}    className='w-5 h-5'/>}
     
         </div>
         

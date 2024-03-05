@@ -17,7 +17,8 @@ const colors=[
 
 
 
- const Playlist = ({globalPlaylistId,setGlobalCurrentSongId,setGlobalIsTrackPlaying}) => {
+ const Playlist = ({globalPlaylistId,setGlobalCurrentSongId,globalIsTrackPlaying}) => {
+  console.log(globalIsTrackPlaying,"anannaananna");
   const {data:session}=useSession()
   const[playlistData,setPlaylistData]=useState(null)
   const[color,setColor]=useState(colors[0])
@@ -94,7 +95,7 @@ useEffect(() => {
  {playlistData?.tracks.items.map((track,i)=>{
  //song component
  return <Song
- setGlobalIsTrackPlaying={setGlobalIsTrackPlaying}
+ globalIsTrackPlaying={globalIsTrackPlaying}
  setGlobalCurrentSongId={setGlobalCurrentSongId}
  key={track.track.id}
  sno={i}
