@@ -10,6 +10,7 @@ import Main from '@/components/Main';
 import Playlist from '@/components/Playlist';
 import Search from '@/components/Search';
 import Player from '@/components/Player';
+import Library from '@/components/Library';
 
 
 
@@ -19,7 +20,6 @@ export default function Home() {
   const [globalArtistId,setGlobalArtistId]=useState(null);
   const[globalCurrentSongId,setGlobalCurrentSongId]=useState(null)
   const[globalIsTrackPlaying,setGlobalIsTrackPlaying]=useState(false)  
-console.log(globalIsTrackPlaying,"vandii");
   return (
     <> 
 
@@ -37,6 +37,7 @@ console.log(globalIsTrackPlaying,"vandii");
     <Navbar/>
     {view === 'playlist'  && <Playlist globalPlaylistId={globalPlaylistId }  setGlobalCurrentSongId={setGlobalCurrentSongId} />}
     {view === 'Search'  && <Search/>}
+    {view === 'library'  && <Library    setView={setView} setGlobalPlaylistId={setGlobalPlaylistId}  />}
     <div  className='sticky z-20 bottom-0 h-24 w-full'>
 <Player globalCurrentSongId={globalCurrentSongId} setGlobalCurrentSongId={setGlobalCurrentSongId} globalIsTrackPlaying={globalIsTrackPlaying} setGlobalIsTrackPlaying={setGlobalIsTrackPlaying}/>
 </div>

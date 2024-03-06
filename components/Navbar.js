@@ -24,7 +24,6 @@ const Navbar = () => {
       setses(session.user);
     }
   }, [session]);
-console.log(ses,"dattty");
   const handleToggleSignInOut = async () => {
     if (sign) {
       await signOut({ callbackUrl: 'http://localhost:3000' });

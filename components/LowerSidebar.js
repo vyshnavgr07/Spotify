@@ -31,7 +31,7 @@ const LowerSidebar = ({setView,setGlobalPlaylistId}) => {
     <div className='bg-[#121212] p-2'>
       <div className='p-6 font-medium text-gray-400 flex items-center justify-between'>
         <Library strokeWidth={2} />
-        <p className='hidden sm:block'>Your Library</p>
+        <p className='hidden sm:block' onClick={()=>setView('library')}>Your Library</p>
         <Plus strokeWidth={2} />
       </div>
       <div className='flex flex-col gap-4'>

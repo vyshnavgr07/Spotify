@@ -8,8 +8,6 @@ const[hover,setHover]=useState(false)
 const{data:session}=useSession()
 async function playSong(trackId){
 setGlobalCurrentSongId(track.id);
-console.log(globalIsTrackPlaying,"jasir");
-// setGlobalIsTrackPlaying(true)
 if(session && session.token.access_token){
 
 
