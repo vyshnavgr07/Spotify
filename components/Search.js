@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import FeaturedPlaylist from './FeaturedPlaylist';
 import SearchResults from './SearchResults';
 
-const Search = () => {
+const Search = ({setView,setGlobalPlaylistId}) => {
   const {data:session}=useSession();
   const[searchData,setSearchData]=useState(null);
   const[inputValue,setInputValue]=useState('')
@@ -50,7 +50,7 @@ inputRef.current.focus()
 
 
             <div>
-              {searchData === null ? <FeaturedPlaylist setView={setView} setGlobalPlaylistId={setGlobalPlaylistId} /> : <SearchResults/>}
+            {searchData === null ? <FeaturedPlaylist setView={setView} setGlobalPlaylistId={setGlobalPlaylistId} /> : <SearchResults/>}
             </div>
 
     </div>
