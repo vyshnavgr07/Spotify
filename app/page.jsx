@@ -36,7 +36,7 @@ export default function Home() {
   <div className=' ml-2 w-full'>
     <Navbar/>
     {view === 'playlist'  && <Playlist globalPlaylistId={globalPlaylistId }  setGlobalCurrentSongId={setGlobalCurrentSongId} />}
-    {view === 'Search'  && <Search/>}
+    {view === 'Search'  && <Search  setView={setView}  globalPlaylistId={globalPlaylistId }   />}
     {view === 'library'  && <Library    setView={setView} setGlobalPlaylistId={setGlobalPlaylistId}  />}
     <div  className='sticky z-20 bottom-0 h-24 w-full'>
 <Player globalCurrentSongId={globalCurrentSongId} setGlobalCurrentSongId={setGlobalCurrentSongId} globalIsTrackPlaying={globalIsTrackPlaying} setGlobalIsTrackPlaying={setGlobalIsTrackPlaying}/>
