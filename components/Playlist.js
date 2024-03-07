@@ -18,13 +18,13 @@ const colors=[
 
 
 
- const Playlist = ({globalPlaylistId,setGlobalCurrentSongId,globalIsTrackPlaying}) => {
-
+ const Playlist = ({globalPlaylistId,setGlobalCurrentSongId,globalIsTrackPlaying,globalArtistId}) => {
    const {data:session}=useSession()
   const[playlistData,setPlaylistData]=useState(null)
   const[color,setColor]=useState(colors[0])
   const[opacity,setOpacity]=useState(1)
   const [textOpacity,setTextOpacity]=useState(1)
+  
 function changOpacity(scrollPos){
   const offset=300;
   const textOffset=10;

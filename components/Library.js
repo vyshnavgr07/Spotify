@@ -31,6 +31,7 @@ useEffect(() => {
 
     fetchData();
   }, [session]);
+  console.log(playlist,"playyyf");
   return (
     <div className='flex-grow h-screen'>
 <header  className='text-white sticky top-0 h-20 z-10 text-4xl  '>
@@ -46,7 +47,12 @@ useEffect(() => {
             <PlayIcon className='h-6 w-6 text-black '/>
         </div>
 
-        <img className='w-48  h-48 mb-4'src={playlist.images[0].url}/>
+        {/* <img className='w-48 h-48 mb-4' src={playlist.images[0].url} /> */}
+
+        {playlist.images.length > 0 && (
+      <img className='w-48 h-48 mb-4' src={playlist.images[0].url} />
+    )}
+
         <p className='text-base text-white mb-1 w-48 truncate'>{playlist.name}</p>
         <p className='text-sm text-neutral-400 mb-8 w-48 truncate'>{playlist.owner.display_name}</p>
 

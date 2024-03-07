@@ -24,14 +24,13 @@ useEffect(() => {
               }
           })
           const data = await response.json()
-          console.log(data,"data");
+          console.log(data.playlists.items);
           setPlaylist(data.playlists.items)
       }
   }
   f()
 }, [session])
 
-console.log(setPlaylist,"qwertyyyy");
   return (
     <div className='flex flex-col gap-4 px-8 h-screen overflow-y-scroll'>
     <h2 className='text-xl font-bold'>Featured Playlists</h2> 
