@@ -24,7 +24,6 @@ useEffect(() => {
               }
           })
           const data = await response.json()
-          console.log(data.playlists.items);
           setPlaylist(data.playlists.items)
       }
   }

@@ -27,6 +27,7 @@ function selectPlaylist(playlist) {
 }
 
 function selectArtist(artist) {
+    console.log(artist.id,"artuuuuu");
     setView("artist")
     setGlobalArtistId(artist.id)
 }

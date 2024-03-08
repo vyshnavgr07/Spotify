@@ -1,6 +1,8 @@
-import { PlayIcon } from 'lucide-react'
+import { shuffle } from 'lodash'
+import { ChevronDownIcon, PlayIcon } from 'lucide-react'
 import { useSession } from 'next-auth/react'
 import React, { useEffect, useState } from 'react'
+import Song from './Song'
 const colors=[
     'from-indigo-500',
     'from-blue-500',
@@ -11,9 +13,8 @@ const colors=[
     'from-purple-500'
   
   ]
-const Artist = ({globalPlaylistId,setGlobalCurrentSongId,globalIsTrackPlaying}) => {
+const Artist = ({globalPlaylistId,setGlobalCurrentSongId,globalIsTrackPlaying,globalArtistId,setView,setGlobalArtistId,setGlobalIsTrackPlaying}) => {
     const {data:session}=useSession()
-    const[playlistData,setPlaylistData]=useState(null)
     const[color,setColor]=useState(colors[0])
     const[opacity,setOpacity]=useState(1)
     const [textOpacity,setTextOpacity]=useState(1)
@@ -43,11 +44,12 @@ async function getArtistData(){
         }
     })
     const data = await response.json()
+    console.log(data,"data from artist");
     return data
 }
 
 async function getTopTracks() {
-    const response = await fetch(`https://api.spotify.com/v1/artists/${globalArtistId}/top-tracks?` + new URLSearchParams({ market: "US" }), {
+    const response = await fetch(`https://api.spotify.com/v1/artists/${globalArtistId}/top-tracks?` + new URLSearchParams({ market: "IN" }), {
         headers:{
             Authorization: `Bearer ${session.token.access_token}`
         }
@@ -68,7 +70,7 @@ async function getRelatedArtists() {
 
 useEffect(() => {
     async function f() {
-        if (session && session.token.access_Token) {
+        if (session && session.token.access_token) {
             setArtistData(await getArtistData())
             setTopTracks(await getTopTracks())
             setRelatedArtists(await getRelatedArtists())
