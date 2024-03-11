@@ -28,7 +28,7 @@ const LowerSidebar = ({setView,setGlobalPlaylistId}) => {
   }, [session]);
 
   return (
-    <div className=' p-2'>
+    <div className=' p-2 bg-[#121212]'>
       <div className='p-6 font-medium text-gray-400 flex items-center justify-between'>
         <Library strokeWidth={2} />
         <p className='hidden sm:block' onClick={()=>setView('library')}>Your Library</p>
@@ -45,7 +45,7 @@ const LowerSidebar = ({setView,setGlobalPlaylistId}) => {
           <p className='text-sm pb-1'>We'll keep you updated on new <span>episodes</span></p>
           <button className='bg-white text-black rounded-full px-3 py-1 font-bold'>Browse podcasts</button>
         </div> */}
-        <div className='bg-[#121212] rounded-lg p-4'>
+        <div className='bg-[#121212] rounded-lg p-4  overflow-y-auto'>
           <div>
             <p className='text-base sm:text-lg'>Your Playlist</p>
             {playlist && playlist.map((play) => (

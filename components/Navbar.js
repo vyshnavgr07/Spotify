@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { signOut, signIn, useSession } from 'next-auth/react';
-import { ChevronLeft, ChevronRight, ArrowDownToLine, Bell, UserRound } from 'lucide-react';
+import { ChevronLeft, ChevronRight, ArrowDownToLine, Bell, UserRound, ChevronDownCircle } from 'lucide-react';
 import { data } from 'browserslist';
 
 const Navbar = () => {
@@ -60,59 +60,24 @@ const Navbar = () => {
           <div className='mr-2'>
             <Bell />
           </div>
-          <button
-            id='dropdownInformationButton'
-            onClick={toggleDropdown}
-            className='text-white  focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-2 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'
-            type='button'
-          >
-            {/* <UserRound /> */}
-            <img className='rounded-full w-10 h-10  ' src={ses.image} alt='profile'  onClick={toggleDropdown} />
-            <svg
-              className={`w-2.5 h-2.5 ml-2 ${dropdownVisible ? 'rotate-180' : ''}`}
-              aria-hidden='true'
-              xmlns='http://www.w3.org/2000/svg'
-              fill='none'
-              viewBox='0 0 10 6'
-            >
-              <path stroke='currentColor' strokeLinecap='round' strokeLinejoin='round' strokeWidth='2' d='m1 1 4 4 4-4' />
-            </svg>
-          </button>
-
+       
           <div
-            id='dropdownInformation'
-            className={`z-10 absolute top-full left-0 mt-2 ${dropdownVisible ? '' : 'hidden'} bg-white divide-y divide-gray-100 rounded-lg shadow w-44 md:w-56 dark:bg-gray-700 dark:divide-gray-600`}
-          >
-            <div className='px-4 py-3 '>
-              <div className='font-bold truncate text-red-600 '>{ses.name}</div>
-            </div>
-            <ul className='py-2 text-sm text-gray-700 dark:text-gray-200' aria-labelledby='dropdownInformationButton'>
-              <li>
-                <a href='#' className='block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white'>
-                  Account
-                </a>
-              </li>
-              <li>
-                <a href='#' className='block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white'>
-                  Profile
-                </a>
-              </li>
-              <li>
-                <a href='#' className='block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white'>
-                  Settings
-                </a>
-              </li>
-            </ul>
+  className='flex items-center bg-black bg-opacity-70 text-white space-x-3 opacity-90 hover:opacity-80 cursor-pointer rounded-l-full rounded-r-full p-1 pr-2'
+  onClick={handleToggleSignInOut}
+>
+  {session && session.user && session.user.image && (
+    <img className='rounded-full w-7 h-7' src={session.user.image} alt='profile pic' />
+  )}
+  {session ? <p>Logout</p> : <p>Login</p>}
+  <ChevronDownCircle className='h-5 w-5' />
+</div>
 
-            <div className='py-2'>
-              <button
-                onClick={handleToggleSignInOut}
-                className='block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white'
-              >
-                {sign ? 'Sign Out' : 'Sign In'}
-              </button>
-            </div>
-          </div>
+
+
+
+
+
+          
         </div>
       </div>
     </div>

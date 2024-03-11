@@ -1,11 +1,11 @@
-import { PauseCircleIcon, PlayCircle, PlayCircleIcon, PlaySquare } from 'lucide-react'
+import { PauseCircleIcon, PlayCircle, PlayCircleIcon, PlaySquare, Volume1, Volume1Icon, Volume2 } from 'lucide-react'
 import { useSession } from 'next-auth/react'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 
 const Player = ({ globalCurrentSongId, setGlobalCurrentSongId, globalIsTrackPlaying, setGlobalIsTrackPlaying }) => {
   const { data: session } = useSession();
   const [songInfo, setSongInfo] = useState(null);
-
+ const [volume,setVolume]=useState(50)
   async function fetchSonginfo(trackId) {
     if (trackId) {
       try {
@@ -74,6 +74,9 @@ const Player = ({ globalCurrentSongId, setGlobalCurrentSongId, globalIsTrackPlay
   }
 }
 
+
+
+
   useEffect(() => {
     async function f() {
       if (session && session.token.access_token) {
@@ -84,6 +87,7 @@ const Player = ({ globalCurrentSongId, setGlobalCurrentSongId, globalIsTrackPlay
             setGlobalIsTrackPlaying(true);
           }
           await fetchSonginfo(data?.item?.id);
+          setVolume(50)
         } else {
           await fetchSonginfo(globalCurrentSongId);
         }
@@ -93,7 +97,7 @@ const Player = ({ globalCurrentSongId, setGlobalCurrentSongId, globalIsTrackPlay
   }, [globalCurrentSongId]);
 
   return (
-    <div className='h-24 bg-neutral-800 border-t border-neutral-700 text-white grid grid-cols-3 text-xs md:text-base px-2 md:px-8'>
+    <div className='h-16 bg-black border-t border-neutral-700 text-white grid grid-cols-3 text-xs md:text-base px-2 md:px-8'>
       <div className='flex items-center space-x-4'>
         {songInfo?.album.images[0].url && <img className='hidden md:inline h-10 w-10' src={songInfo.album.images[0].url} />}
         <div>
@@ -101,10 +105,24 @@ const Player = ({ globalCurrentSongId, setGlobalCurrentSongId, globalIsTrackPlay
           <p className='text-neutral-400 text-xs'>{songInfo?.artists[0].name}</p>
         </div>
       </div>
-      <div className='flex items-center justify-center'>
+      <div className='flex items-center justify-center '>
         {globalIsTrackPlaying ? <PauseCircleIcon onClick={handlePlayPause} className='w-5 h-5' /> : <PlayCircleIcon onClick={handlePlayPause} className='w-5 h-5' />}
       </div>
-      <div></div>
+      <div className='flex items-center justify-end  space-x-3 md:space-x-4 pr-5'>
+   <Volume1 onClick={()=>volume>0 && setVolume(volume-10)}/>
+     <input
+     className='w-14 md:w-28'
+        type="range"
+        id="volume"
+        name="volume"
+        min={0}
+        max={100}
+        step="0.01"
+        //  value={volume}
+        onChange={(e) =>setVolume(Number(e.target.value))}
+      />
+   <Volume2  onClick={()=>volume<100 && setVolume(volume+10)}/>
+    </div>
     </div>
   );
 };
