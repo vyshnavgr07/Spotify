@@ -1,11 +1,40 @@
-import { PauseCircleIcon, PlayCircle, PlayCircleIcon, PlaySquare, Volume1, Volume1Icon, Volume2 } from 'lucide-react'
-import { useSession } from 'next-auth/react'
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react';
+import { PauseCircleIcon, PlayCircleIcon, Volume1, Volume2 } from 'lucide-react';
+import { useSession } from 'next-auth/react';
 
 const Player = ({ globalCurrentSongId, setGlobalCurrentSongId, globalIsTrackPlaying, setGlobalIsTrackPlaying }) => {
   const { data: session } = useSession();
   const [songInfo, setSongInfo] = useState(null);
- const [volume,setVolume]=useState(50)
+  const [volume, setVolume] = useState(50);
+
+
+
+  async function updateVolume(newVolume) {
+    try {
+      console.log('Updating volume:', newVolume);
+      const response = await fetch(`https://api.spotify.com/v1/me/player/volume?volume_percent=${newVolume}`, {
+        method: 'PUT',
+        headers: {
+          Authorization: `Bearer ${session.token.access_token}`,
+        },
+      });
+  
+      console.log('Volume update response:', response);
+  
+      if (!response.ok) {
+        console.error(`Error updating volume. Status: ${response.status}`);
+        // Handle the error accordingly
+      }
+    } catch (error) {
+      console.error('Error updating volume:', error.message);
+    }
+  }
+  
+
+
+
+
+
   async function fetchSonginfo(trackId) {
     if (trackId) {
       try {
@@ -29,53 +58,46 @@ const Player = ({ globalCurrentSongId, setGlobalCurrentSongId, globalIsTrackPlay
   }
 
   async function getCurrentlyPlaying() {
-  
-      const response = await fetch(`https://api.spotify.com/v1/me/player/currently-playing`, {
-        headers: {
-          Authorization: `Bearer ${session.token.access_token}`,
-        },
-      });
+    const response = await fetch(`https://api.spotify.com/v1/me/player/currently-playing`, {
+      headers: {
+        Authorization: `Bearer ${session.token.access_token}`,
+      },
+    });
 
-      if (response.status ==204 ) {
-        console.error('204 response from currently playing', response.status);
-        return ;
-      }
+    if (response.status === 204) {
+      console.error('204 response from currently playing', response.status);
+      return;
+    }
 
-      const data=await response.json()
-      return data;
-  
+    const data = await response.json();
+    return data;
   }
 
   async function handlePlayPause() {
     if (session && session.token.access_token) {
       const data = await getCurrentlyPlaying();
-       if (data.is_playing) {
-          const response = await fetch("https://api.spotify.com/v1/me/player/pause", {
-            method:'PUT',
-            headers: {
-              Authorization: `Bearer ${session.token.access_token}`,
-            },
-          })
-          if(response.status ==204 )
-          setGlobalIsTrackPlaying(false)
-}else{
-  const response=await fetch('https://api.spotify.com/v1/me/player/play',{
-    method:'PUT',
-    headers:{
-      Authorization: `Bearer ${session.token.access_token}`
+      if (data.is_playing) {
+        const response = await fetch('https://api.spotify.com/v1/me/player/pause', {
+          method: 'PUT',
+          headers: {
+            Authorization: `Bearer ${session.token.access_token}`,
+          },
+        });
+        if (response.status === 204) setGlobalIsTrackPlaying(false);
+      } else {
+        const response = await fetch('https://api.spotify.com/v1/me/player/play', {
+          method: 'PUT',
+          headers: {
+            Authorization: `Bearer ${session.token.access_token}`,
+          },
+        });
+        if (response.status === 204) {
+          setGlobalIsTrackPlaying(true);
+          setGlobalCurrentSongId(data.item.id);
+        }
+      }
+    }
   }
-  
-  })
-  if(response.status ===204){
-   setGlobalIsTrackPlaying(true)
-   setGlobalCurrentSongId(data.item.id) 
-  }
-}
-  }
-}
-
-
-
 
   useEffect(() => {
     async function f() {
@@ -87,7 +109,7 @@ const Player = ({ globalCurrentSongId, setGlobalCurrentSongId, globalIsTrackPlay
             setGlobalIsTrackPlaying(true);
           }
           await fetchSonginfo(data?.item?.id);
-          setVolume(50)
+          setVolume(50);
         } else {
           await fetchSonginfo(globalCurrentSongId);
         }
@@ -99,7 +121,7 @@ const Player = ({ globalCurrentSongId, setGlobalCurrentSongId, globalIsTrackPlay
   return (
     <div className='h-16 bg-black border-t border-neutral-700 text-white grid grid-cols-3 text-xs md:text-base px-2 md:px-8'>
       <div className='flex items-center space-x-4'>
-        {songInfo?.album.images[0].url && <img className='hidden md:inline h-10 w-10' src={songInfo.album.images[0].url} />}
+        {songInfo?.album.images[0].url && <img className='hidden md:inline h-10 w-10' src={songInfo.album.images[0].url} alt='Album Cover' />}
         <div>
           <p className='text-white text-sm'>{songInfo?.name}</p>
           <p className='text-neutral-400 text-xs'>{songInfo?.artists[0].name}</p>
@@ -109,20 +131,25 @@ const Player = ({ globalCurrentSongId, setGlobalCurrentSongId, globalIsTrackPlay
         {globalIsTrackPlaying ? <PauseCircleIcon onClick={handlePlayPause} className='w-5 h-5' /> : <PlayCircleIcon onClick={handlePlayPause} className='w-5 h-5' />}
       </div>
       <div className='flex items-center justify-end  space-x-3 md:space-x-4 pr-5'>
-   <Volume1 onClick={()=>volume>0 && setVolume(volume-10)}/>
-     <input
-     className='w-14 md:w-28'
-        type="range"
-        id="volume"
-        name="volume"
-        min={0}
-        max={100}
-        step="0.01"
-        //  value={volume}
-        onChange={(e) =>setVolume(Number(e.target.value))}
-      />
-   <Volume2  onClick={()=>volume<100 && setVolume(volume+10)}/>
-    </div>
+        <Volume1 onClick={() => volume > 0 && setVolume(volume - 10)} />
+        <input
+  className='w-14 md:w-28'
+  type='range'
+  id='volume'
+  name='volume'
+  min={0}
+  max={100}
+  step='1'
+  value={volume}
+  onChange={(e) => {
+    console.log('New volume value:', e.target.value);
+    setVolume(Number(e.target.value));
+    updateVolume(Number(e.target.value));
+  }}
+/>
+
+        <Volume2 onClick={() => volume < 100 && setVolume(volume + 10)} />
+      </div>
     </div>
   );
 };

@@ -3,18 +3,12 @@ import { useRouter } from 'next/navigation';
 import { signOut, signIn, useSession } from 'next-auth/react';
 import { ChevronLeft, ChevronRight, ArrowDownToLine, Bell, UserRound, ChevronDownCircle } from 'lucide-react';
 import { data } from 'browserslist';
+import {Checkout} from './Checkout';
 
 const Navbar = () => {
   const router = useRouter();
-  const [dropdownVisible, setDropdownVisible] = useState(false);
   const [sign, setSign] = useState(false);
-  const [ses, setses] = useState('');
-  
-
-  const toggleDropdown = () => {
-    setDropdownVisible(!dropdownVisible);
-  };
-
+  const [ses,setses]=useState(null)
   const { data: session } = useSession();
 
 
@@ -33,6 +27,24 @@ const Navbar = () => {
     }
   };
 
+
+
+
+
+  const handleExplorePremium = async () => {
+    // Call the Checkout component to handle the payment
+    Checkout({
+        handlePayment: async ({ stripe, lineItems }) => {
+            await stripe.redirectToCheckout({
+                mode: 'payment',
+                lineItems,
+                successUrl: `${window.location.origin}?session_id={CHECKOUT_SESSION_ID}`,
+                cancelUrl: window.location.origin,
+            });
+        },
+    });
+};
+
   return (
     <div className='flex flex-col md:flex-row justify-between p-5 bg-[#121212] h-28 w-full mt-3'>
       <div className='flex gap-2 mb-3 md:mb-0'>
@@ -46,16 +58,17 @@ const Navbar = () => {
 
       <div className='flex gap-2 items-center'>
         <a href='/auth/login'>
-          <button className='rounded-full bg-white text-black p-2 hover:scale-105 transition-transform h-8 text-sm font-weight: 900'>
+          <button className='rounded-full bg-white text-black p-2 hover:scale-105 transition-transform h-8 text-sm font-weight: 900'
+          onClick={handleExplorePremium}>
             Explore premium
           </button>
         </a>
 
-        <button className='rounded-full bg-black flex p-2 items-center hover:scale-105 transition-transform h-8 text-sm'>
+        <a href='https://open.spotify.com/download'>  <button  className='rounded-full bg-black flex p-2 items-center hover:scale-105 transition-transform h-8 text-sm'>
           <ArrowDownToLine />
           Install App
         </button>
-
+        </a> 
         <div className='p-3 relative flex items-center'>
           <div className='mr-2'>
             <Bell />

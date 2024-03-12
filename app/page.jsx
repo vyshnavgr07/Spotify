@@ -13,29 +13,32 @@ import Player from '@/components/Player';
 import Library from '@/components/Library';
 import Artist from '@/components/Artist';
 import FeaturedPlaylist from '@/components/FeaturedPlaylist';
+import NoSession from '@/components/NoSession';
 
 
 
 export default function Home() {
-  const [view,setView]=useState('search');
+  const [view,setView]=useState('');
   const [globalPlaylistId,setGlobalPlaylistId]=useState(null);
   const [globalArtistId,setGlobalArtistId]=useState(null);
   const[globalCurrentSongId,setGlobalCurrentSongId]=useState(null)
-  const[globalIsTrackPlaying,setGlobalIsTrackPlaying]=useState(false)  
+  const[globalIsTrackPlaying,setGlobalIsTrackPlaying]=useState(false) 
+  const{data:Session}=useSession() 
   return (
     
 <div> 
 
  <div  className="flex "> 
+ 
 <div  className='mt-3 min-h-32' >
   <Sidebarr
   view={view}
   setView={setView}
   setGlobalPlaylistId={setGlobalPlaylistId}/>
    </div>
-
+   {!Session?<NoSession/>:(
   <div className=' ml-2 w-full'>
-    {/* <Navbar/> */}
+    {view == "" && <Main/>}
     {view === 'playlist'  && <Playlist globalPlaylistId={globalPlaylistId }  setGlobalCurrentSongId={setGlobalCurrentSongId} globalArtistId={globalArtistId} />}
     {view === 'Search'  && <Search  
     setView={setView} 
@@ -65,9 +68,11 @@ export default function Home() {
 <Player globalCurrentSongId={globalCurrentSongId} setGlobalCurrentSongId={setGlobalCurrentSongId} globalIsTrackPlaying={globalIsTrackPlaying} setGlobalIsTrackPlaying={setGlobalIsTrackPlaying}/>
 </div> */}
    </div>
+   )}
 </div >
 <div  className='sticky z-20 bottom-0  w-full'>
 <Player globalCurrentSongId={globalCurrentSongId} setGlobalCurrentSongId={setGlobalCurrentSongId} globalIsTrackPlaying={globalIsTrackPlaying} setGlobalIsTrackPlaying={setGlobalIsTrackPlaying}/>
+
 </div>
 </div>
    );
